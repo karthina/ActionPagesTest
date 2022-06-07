@@ -13,8 +13,9 @@ import com.kstruct.gethostname4j.Hostname;
 
 public class ExtentReport {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ExtentReport.class);
-    private static String DOCUMENT_TITLE = "Sekure Automation Report";
-    private static String REPORT_NAME = "Test Execution Report - Sekure Merchant Solutions";
+	private static final String FILE_SEPERATOR = System.getProperty("file.separator");
+    private static String DOCUMENT_TITLE = "Arthina Automation Report";
+    private static String REPORT_NAME = "Test Execution Report - Arthina Merchant Solutions";
 //    private static String REPORT_FILE_NAME = "Test-Execution-Report.html";
     
 	private static ExtentReports extent;
@@ -27,13 +28,11 @@ public class ExtentReport {
  
     //Create an extent report instance
     public static ExtentReports createInstance(final String reportName) {
-        String fileName = getReportPath() + reportName + ".html";
+        //String fileName = String.join(FILE_SEPERATOR, getReportPath(), reportName + ".html");
+        final String fileName = String.join(FILE_SEPERATOR, getReportPath(), "index.html");
        
         ExtentSparkReporter htmlReporter = new ExtentSparkReporter(fileName);
         
-        //htmlReporter.config().setTestViewChartLocation(ChartLocation.BOTTOM);
-        //htmlReporter.config().setChartVisibilityOnOpen(true);
-       // htmlReporter.config().setAutoCreateRelativePathMedia(true);
         htmlReporter.config().setTheme(Theme.STANDARD);
         htmlReporter.config().setDocumentTitle(DOCUMENT_TITLE + " :: " + REPORT_NAME);
         htmlReporter.config().setEncoding("UTF-8");
@@ -55,28 +54,32 @@ public class ExtentReport {
      
     //Create the report path
     private static String getReportPath() {
-    	String path = null;
+    	//String path = null;
     	String workingDir = System.getProperty("user.dir");
-        if (System.getProperty("os.name").toLowerCase().contains("win")) {
-        	path = workingDir + "\\test-output\\ExecutionReports\\";
-        	System.out.println("Formed Report Path(Win): " + path);
-        }
-        else if (System.getProperty("os.name").toLowerCase().contains("mac")) {
-        	path = workingDir + "/test-output/ExecutionReports/";
-        	System.out.println("Formed Report Path(Mac): " + path);
-        }
-    	File testDirectory = new File(path);
+    	LOGGER.debug("Working Directory: {}", workingDir);
+//        if (System.getProperty("os.name").toLowerCase().contains("win")) {
+//        	path = workingDir + "\\test-output\\ExecutionReports\\";
+//        	System.out.println("Formed Report Path(Win): " + path);
+//        }
+//        else if (System.getProperty("os.name").toLowerCase().contains("mac")) {
+//        	path = workingDir + "/test-output/ExecutionReports/";
+//        	System.out.println("Formed Report Path(Mac): " + path);
+//        }
+
+        final String reportBasePath = String.join(FILE_SEPERATOR, workingDir, "target", "ExecutionReports");
+
+    	File testDirectory = new File(reportBasePath);
         if (!testDirectory.exists()) {
         	if (testDirectory.mkdirs()) {
-        		LOGGER.info("Directory: {} is created!", path);
-                return path;
+        		LOGGER.info("Directory: {} is created!", reportBasePath);
+                return reportBasePath;
             } else {
-            	LOGGER.error("Failed to create directory: {}", path);
+            	LOGGER.error("Failed to create directory: {}", reportBasePath);
                 return System.getProperty("user.dir");
             }
         } else {
-        	LOGGER.debug("Directory already exists: {}", path);
+        	LOGGER.debug("Directory already exists: {}", reportBasePath);
         }
-		return path;	
+		return reportBasePath;
     }    
 }

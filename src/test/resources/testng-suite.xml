@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 <suite name="ArthinaAutomationTestSuite" parallel="none" verbose="2" annotations="JDK" thread-count="2">
   <listeners>
   	<listener class-name="com.arthina.automation.CustomLogListener" />

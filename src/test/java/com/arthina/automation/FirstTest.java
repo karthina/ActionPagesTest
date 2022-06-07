@@ -1,45 +1,26 @@
 package com.arthina.automation;
 
-import org.testng.ITestContext;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.*;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class FirstTest {
+public class FirstTest extends TestBase{
 
-	@BeforeSuite
-	public void initSuite(ITestContext testContext) {
-		ExtentTestManager.startReport(testContext.getSuite().getName());
+	@Test
+	public void firstTest() {
+		assertEquals("FirstTest", "FirstTest");
 	}
 
-	@BeforeClass
-	public void setUp(ITestContext testContext) {
-        ExtentTestManager.createTest(this.getClass().getSimpleName());
-    }
-
-    @BeforeMethod
-	public void initTest(ITestContext testContext, Method method, final Object[] dataDrivenTestName) {
-		final String testName = dataDrivenTestName.length > 0 ? method.getName() + "_" + ObjectUtils.toString(dataDrivenTestName[1], "EMPTY") : method.getName();
-		Test test = method.getAnnotation(Test.class);
-		final String testDescription = test.description();
-		
-		log.info("$$$$$$$ Initializing the Extent Report as: {} ({})", testName, testDescription);
-		ExtentTestManager.startTest(this.getClass().getSimpleName(), testName, testDescription);		
+	@Test
+	public void secondTest() {
+		assertEquals("SecondTest", "SecondTest");
 	}
-	
 
-
-
-	@AfterMethod
-	public void stopReport() {
-		log.info("Extent Reporter getting flushed..");
-		ExtentTestManager.endTest();
+	@Test
+	public void thirdTest() {
+		assertEquals("ThirdTest", "ThirdTest");
 	}
-	
-	@AfterClass
-	public void tearDown() {
 
-	}    
+
 }

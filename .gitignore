@@ -25,3 +25,6 @@ hs_err_pid*
 .vscode/
 .DS_Store
 Target/
+*.iml
+.idea/
+test-output/*
