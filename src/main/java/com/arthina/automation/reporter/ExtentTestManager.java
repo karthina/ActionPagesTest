@@ -1,10 +1,11 @@
-package com.arthina.automation;
+package com.arthina.automation.reporter;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import com.aventstack.extentreports.model.Media;
 import org.testng.annotations.Optional;
-
+import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
@@ -50,7 +51,11 @@ public class ExtentTestManager {
 	public static void logFail(String failureMessage){
 		getTest().log(Status.FAIL, failureMessage);
 	}
-	
+
+	public static void logFailWithScreenShot(String failureMessage, Media media){
+		getTest().log(Status.FAIL, failureMessage, media);
+	}
+
 	public static void logInfo(String infoMessage){
 		getTest().log(Status.INFO, infoMessage);
 	}

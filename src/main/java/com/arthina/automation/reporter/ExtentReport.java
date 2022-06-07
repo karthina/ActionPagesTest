@@ -1,4 +1,4 @@
-package com.arthina.automation;
+package com.arthina.automation.reporter;
 
 import java.io.File;
 
@@ -27,10 +27,9 @@ public class ExtentReport {
     }
  
     //Create an extent report instance
-    public static ExtentReports createInstance(final String reportName) {
-        //String fileName = String.join(FILE_SEPERATOR, getReportPath(), reportName + ".html");
-        final String fileName = String.join(FILE_SEPERATOR, getReportPath(), "index.html");
-       
+    private static ExtentReports createInstance(final String reportName) {
+        String fileName = String.join(FILE_SEPERATOR, getReportPath(), reportName + ".html");
+
         ExtentSparkReporter htmlReporter = new ExtentSparkReporter(fileName);
         
         htmlReporter.config().setTheme(Theme.STANDARD);
@@ -48,7 +47,11 @@ public class ExtentReport {
 		extent.setSystemInfo("HostName", Hostname.getHostname());
 		extent.setAnalysisStrategy(AnalysisStrategy.TEST);
         extent.attachReporter(htmlReporter);
-		
+
+        //loading the external xml file (i.e., extent-config.xml) which was placed under the base directory
+        //You could find the xml file below. Create xml file in your project and copy past the code mentioned below
+        //extent.loadConfig(new File(System.getProperty("user.dir")+"\\extent-config.xml"));
+
         return extent;
     }
      
@@ -81,5 +84,5 @@ public class ExtentReport {
         	LOGGER.debug("Directory already exists: {}", reportBasePath);
         }
 		return reportBasePath;
-    }    
+    }
 }
